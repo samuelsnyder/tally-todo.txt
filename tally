@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# tally
+# samuel.leason.snyder@gmail.com 
+
+shift
+[[ $1 = "usage" ]] && echo $TODO_SH tally && exit
+
+tally_prev_date=""
+i=0; tally_total=0; tally_days=""
+echo -e "Date\tCompleted"
+while read;
+do
+	tally_current_date=$(echo $REPLY | grep -oE "^x [0-9]{4}-[0-9]{2}-[0-9]{2}" | cut -d ' ' -f2)
+	if [[ $tally_current_date = $tally_prev_date || ! -n "$tally_prev_date" ]]; then
+		i=$((i+1))
+		[[ ! -n $tally_days ]] && tally_days=1
+	else
+		echo -e "$tally_prev_date\t$i"
+		i=1
+		tally_days=$(( tally_days+1))
+	fi
+	tally_total=$((tally_total + 1))
+	tally_prev_date=$tally_current_date
+done <$TODO_DIR/done.txt
+echo -e "$tally_prev_date\t$i"
+echo --
+echo  "Total:$tally_total Days:$tally_days Ave:$((tally_total / tally_days))"
+exit
