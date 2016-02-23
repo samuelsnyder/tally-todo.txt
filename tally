@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # tally
-# samuel.leason.snyder@gmail.com 
+# samuel.l.snyder@gmail.com 
 
 shift
 [[ $1 = "usage" ]] && echo $TODO_SH tally && exit
